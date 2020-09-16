@@ -1,6 +1,6 @@
 using System;
 
-namespace CacheTable.Data
+namespace CacheTable
 {
     public class WeatherForecast
     {
