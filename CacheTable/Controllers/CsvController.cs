@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CacheTable.Models;
 using CacheTable.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -40,7 +41,9 @@ namespace CacheTable.Controllers
                 return NotFound($"view {view} not found.");
             }
 
-            return Ok(app);
+            var list = await _airTable.GetAppsAsync();
+
+            return Ok(list);
         }
 
     }

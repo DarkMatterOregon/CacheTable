@@ -1,7 +1,4 @@
-using System;
-using CacheTable.Models;
-
-namespace AppTable
+namespace CacheTable.Models
 {
     public class App: IAirtable
     {
