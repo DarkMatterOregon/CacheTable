@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AirtableApiClient;
 using CacheTable.Models;
 using CacheTable.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -41,9 +42,10 @@ namespace CacheTable.Controllers
                 return NotFound($"view {view} not found.");
             }
 
-            var list = await _airTable.GetAppsAsync();
+            var layer = await _airTable.GetTableAsync<Layer>(app.AppKey, app.BaseId,table.TableName,table.View);
+            // open the other base
 
-            return Ok(list);
+            return Ok(layer);
         }
 
     }

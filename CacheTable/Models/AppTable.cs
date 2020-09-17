@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace CacheTable.Models
 {
     public class App: IAirtable
@@ -12,6 +14,8 @@ namespace CacheTable.Models
     {
         public string Id  { get; set; }
         public string Name  { get; set; }
+        [JsonProperty("Table")]
+        public string TableName  { get; set; }
         public string View  { get; set; }
     }
 }

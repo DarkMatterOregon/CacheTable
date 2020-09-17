@@ -30,6 +30,7 @@ namespace CacheTable.Services
             AppKey = configuration["AirTable:AppKey"];
         }
 
+  
         private void PopulateIds<T>(IEnumerable<AirtableRecord<T>> responseRecords) where T : IAirtable
         {
             foreach (var item in responseRecords)
@@ -38,7 +39,21 @@ namespace CacheTable.Services
             }
         }
 
-        protected async Task<List<T>> GetTableAsync<T>(string tableName) where T : IAirtable
+        public async Task<List<T>> GetTableAsync<T>(string tableName) where T : IAirtable
+        {
+            var list = await GetTableAsync<T>(AppKey, BaseId, tableName);
+            return list;
+        }
+
+        /// <summary>
+        /// overload to accept appkeys and baseid to access more tables.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="AppKey"></param>
+        /// <param name="BaseId"></param>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public async Task<List<T>> GetTableAsync<T>(string AppKey, string BaseId, string tableName,string view=null) where T : IAirtable
         {
             var table = new List<AirtableRecord<T>>();
             string offset = null;
@@ -52,7 +67,7 @@ namespace CacheTable.Services
                 do
                 {
                     Task<AirtableListRecordsResponse<T>> task =
-                        airtableBase.ListRecords<T>(tableName: tableName, offset: offset);
+                        airtableBase.ListRecords<T>(tableName: tableName, offset: offset,view:view);
 
                     var response = await task;
 
