@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AirtableApiClient;
 using CacheTable.Models;
@@ -12,7 +13,6 @@ namespace CacheTable.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Produces("text/csv")]
     public class CsvController : ControllerBase
     {
       
@@ -28,6 +28,7 @@ namespace CacheTable.Controllers
 
         // GET /api/FireRefuge/Shelter
         [HttpGet("{database}/{view}")]
+        [Produces("text/csv")]
         public async Task<IActionResult> Get(string database, string view)
         {
             var app = await _airTable.GetAppAsync(database);
@@ -48,5 +49,11 @@ namespace CacheTable.Controllers
             return Ok(layer);
         }
 
+        [HttpGet("flush")]
+        public IActionResult Flush()
+        {
+            _airTable.Flush();
+            return Ok("Cache flushed on for CacheTable definitions");
+        }
     }
 }

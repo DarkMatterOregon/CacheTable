@@ -39,5 +39,11 @@ namespace CacheTable.Services
             var list = await GetTablesAsync();
             return list.SingleOrDefault(t => string.Equals(t.Name, name, StringComparison.CurrentCultureIgnoreCase));
         }
+
+        public void Flush()
+        {
+            _apps = null;
+            _tables = null;
+        }
     }
 }
